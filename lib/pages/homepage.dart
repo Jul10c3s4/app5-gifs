@@ -10,7 +10,6 @@ class HomePage extends StatefulWidget {
 }
 
 class HhomePageState extends State<HomePage> {
-
   String _search = "";
   int _offSet = 0;
 
@@ -26,7 +25,7 @@ class HhomePageState extends State<HomePage> {
         body: Column(
           children: [
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: EdgeInsets.all(10),
               child: Column(
                 children: [
                   TextField(
@@ -40,16 +39,12 @@ class HhomePageState extends State<HomePage> {
                         width: 2,
                       )),
                     ),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 18
-                    ),
+                    style: const TextStyle(color: Colors.white, fontSize: 18),
                     textAlign: TextAlign.center,
                     //s
-                    onSubmitted: (text){
+                    onSubmitted: (text) {
                       _search = text;
                       _offSet = 0;
-
                     },
                   )
                 ],
