@@ -3,6 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:transparent_image/transparent_image.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -73,8 +74,8 @@ class HhomePageState extends State<HomePage> {
                             return Container(
                               child: Text('ERRO'),
                             );
-                          }else{
-                            return _createGifTable(context, snapshot)
+                          } else {
+                            return _createGifTable(context, snapshot);
                           }
                       }
                     })),
@@ -94,5 +95,56 @@ class HhomePageState extends State<HomePage> {
           "https://api.giphy.com/v1/gifs/search?api_key=ADLW6jk07vn3S9QrBWlneu4C8zZUDB7U&q=$_search&limit=19&offset=$_offset&rating=G&lang=en"));
     }
     return json.decode(response.body);
+  }
+
+  int _getCount(List data) {
+    if (_search.isEmpty) {
+      return data.length;
+    } else {
+      return data.length + 1;
+    }
+  }
+
+  Widget _createGifTable(BuildContext context, AsyncSnapshot snapshot) {
+    return GridView.builder(
+      padding: const EdgeInsets.all(10),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+      ),
+      itemCount: _getCount(snapshot.data['data']),
+      itemBuilder: (context, index) {
+        if (_search.isEmpty || index < snapshot.data["Data"].length) {
+          return GestureDetector(
+            child: FadeInImage.memoryNetwork(
+              placeholder: kTransparentImage,
+              image: snapshot.data["data"][index]["images"]['fixed_heigth']
+                  ['url'],
+              height: 300,
+              fit: BoxFit.cover,
+            ),
+            onTap: () {},
+            onLongPress: () {},
+          );
+        } else {
+          return SizedBox(
+            child: GestureDetector(
+              child: Column(
+                children: [
+                  Icon(
+                    Icons.add,
+                  ),
+                  Text(
+                    'Carregar mais...',
+                    style: TextStyle(color: Colors.white, fontSize: 22),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+      },
+    );
   }
 }
