@@ -2,6 +2,7 @@ import 'package:app5/pages/homepage.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  //parei no minuto 43
   runApp(const MyApp());
 }
 
@@ -13,6 +14,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: HomePage(),
+      theme: ThemeData(
+      ),
     
     );
   }
